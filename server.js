@@ -10,27 +10,27 @@ connectDB();
 
 const app = express();
 
-// ✅ Manually set CORS headers to allow Authorization header
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://expense-tracker-frontend-sand-alpha.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  next();
-});
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://expense-tracker-frontend-sand-alpha.vercel.app'
+];
 
-// ✅ Use CORS middleware with proper origin
 app.use(cors({
-  origin: 'https://expense-tracker-frontend-sand-alpha.vercel.app',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
 
+// ✅ Correct route path
 app.use('/api/auth', authRoutes);
 app.use('/api/expenses', expenseRoutes);
 
