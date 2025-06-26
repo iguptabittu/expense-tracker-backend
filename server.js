@@ -12,7 +12,7 @@ const app = express();
 
 // ✅ Manually set CORS headers to allow Authorization header
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://expense-tracker-backend-wl36.onrender.com/');
+  res.header('Access-Control-Allow-Origin', 'https://expense-tracker-frontend-sand-alpha.vercel.app/');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization');
   if (req.method === 'OPTIONS') {
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 // ✅ Use CORS middleware for general CORS handling
 app.use(cors({
-  origin: 'https://expense-tracker-backend-wl36.onrender.com/',
+  origin: 'https://expense-tracker-frontend-sand-alpha.vercel.app/',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
