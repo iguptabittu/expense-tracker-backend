@@ -12,31 +12,28 @@ const app = express();
 
 // ✅ Manually set CORS headers to allow Authorization header
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://expense-tracker-frontend-sand-alpha.vercel.app/');
+  res.header('Access-Control-Allow-Origin', 'https://expense-tracker-frontend-sand-alpha.vercel.app');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization');
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(200); // Respond to preflight
+    return res.sendStatus(200);
   }
   next();
 });
 
-// ✅ Use CORS middleware for general CORS handling
+// ✅ Use CORS middleware with proper origin
 app.use(cors({
-  origin: 'https://expense-tracker-frontend-sand-alpha.vercel.app/',
+  origin: 'https://expense-tracker-frontend-sand-alpha.vercel.app',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// ✅ Parse incoming JSON
 app.use(express.json());
 
-// ✅ Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/expenses', expenseRoutes);
 
-// ✅ Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
