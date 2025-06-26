@@ -15,7 +15,6 @@ const allowedOrigins = [
   'https://expense-tracker-frontend-sand-alpha.vercel.app'
 ];
 
-// ✅ Use CORS middleware first
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -26,16 +25,12 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// ✅ Handle preflight manually
 app.options('*', cors());
-
-// ✅ Express JSON parser
 app.use(express.json());
 
-// ✅ Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/expenses', expenseRoutes);
 
